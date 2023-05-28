@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.cementstabilized.mapper.CementStabilizedMapper">
-    
+
     <resultMap type="CementStabilized" id="CementStabilizedResult">
         <result property="id"    column="id"    />
         <result property="organizationId"    column="organization_id"    />
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectCementStabilizedList" parameterType="CementStabilized" resultMap="CementStabilizedResult">
         <include refid="selectCementStabilizedVo"/>
-        <where>  
+        <where>
             <if test="mixingStationCode != null  and mixingStationCode != ''"> and mixing_station_code = #{mixingStationCode}</if>
             <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number = #{equipmentNumber}</if>
             <if test="mixingMachineName != null  and mixingMachineName != ''"> and mixing_machine_name like concat('%', #{mixingMachineName}, '%')</if>
@@ -68,12 +68,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="batchWeight != null  and batchWeight != ''"> and batch_weight = #{batchWeight}</if>
         </where>
     </select>
-    
+
     <select id="selectCementStabilizedById" parameterType="String" resultMap="CementStabilizedResult">
         <include refid="selectCementStabilizedVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertCementStabilized" parameterType="CementStabilized">
         insert into cement_stabilized_macadam_collection
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -228,9 +228,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteCementStabilizedByIds" parameterType="String">
-        delete from cement_stabilized_macadam_collection where id in 
+        delete from cement_stabilized_macadam_collection where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
+
+    <!--查询柱状图数据-->
+    <select id="queryBar" resultType="map">
+        SELECT
+        ROUND(SUM(a.batch_weight), 3) batchWeight,
+        DATE_FORMAT(
+        a.discharging_time,
+        '%Y-%m-%d'
+        ) dischargingTime
+        FROM
+        cement_stabilized_macadam_collection a
+        WHERE
+        1=1
+        <if test="minTime != null and minTime != ''">
+            and DATE_FORMAT(discharging_time,'%Y-%m-%d') &gt;= #{minTime}
+        </if>
+        <if test="maxTime != null and maxTime != ''">
+            and DATE_FORMAT(discharging_time,'%Y-%m-%d') &lt;= #{maxTime}
+        </if>
+        <if test="mixingMachineName != null and mixingMachineName !=''">
+            and mixingMachineName like concat('%',#{mixingMachineName},'%')
+        </if>
+        GROUP BY
+        DATE_FORMAT(
+        a.discharging_time,
+        '%Y-%m-%d'
+        )
+        ORDER BY
+        a.discharging_time DESC
+    </select>
 </mapper>

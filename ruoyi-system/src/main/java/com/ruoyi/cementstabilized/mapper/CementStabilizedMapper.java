@@ -1,19 +1,21 @@
 package com.ruoyi.cementstabilized.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.cementstabilized.domain.CementStabilized;
 
 /**
  * 水泥稳定碎石集料Mapper接口
- * 
+ *
  * @author liutianrui
  * @date 2023-05-28
  */
-public interface CementStabilizedMapper 
+public interface CementStabilizedMapper
 {
     /**
      * 查询水泥稳定碎石集料
-     * 
+     *
      * @param id 水泥稳定碎石集料主键
      * @return 水泥稳定碎石集料
      */
@@ -21,7 +23,7 @@ public interface CementStabilizedMapper
 
     /**
      * 查询水泥稳定碎石集料列表
-     * 
+     *
      * @param cementStabilized 水泥稳定碎石集料
      * @return 水泥稳定碎石集料集合
      */
@@ -29,7 +31,7 @@ public interface CementStabilizedMapper
 
     /**
      * 新增水泥稳定碎石集料
-     * 
+     *
      * @param cementStabilized 水泥稳定碎石集料
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface CementStabilizedMapper
 
     /**
      * 修改水泥稳定碎石集料
-     * 
+     *
      * @param cementStabilized 水泥稳定碎石集料
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface CementStabilizedMapper
 
     /**
      * 删除水泥稳定碎石集料
-     * 
+     *
      * @param id 水泥稳定碎石集料主键
      * @return 结果
      */
@@ -53,9 +55,12 @@ public interface CementStabilizedMapper
 
     /**
      * 批量删除水泥稳定碎石集料
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteCementStabilizedByIds(String[] ids);
+
+    //查询柱状图数据，按天分组
+    List<Map<String,Object>> queryBar(Map<String,Object> params);
 }

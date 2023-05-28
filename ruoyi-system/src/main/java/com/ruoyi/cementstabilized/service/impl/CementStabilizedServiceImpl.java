@@ -1,6 +1,8 @@
 package com.ruoyi.cementstabilized.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.cementstabilized.mapper.CementStabilizedMapper;
@@ -9,19 +11,19 @@ import com.ruoyi.cementstabilized.service.ICementStabilizedService;
 
 /**
  * 水泥稳定碎石集料Service业务层处理
- * 
+ *
  * @author liutianrui
  * @date 2023-05-28
  */
 @Service
-public class CementStabilizedServiceImpl implements ICementStabilizedService 
+public class CementStabilizedServiceImpl implements ICementStabilizedService
 {
     @Autowired
     private CementStabilizedMapper cementStabilizedMapper;
 
     /**
      * 查询水泥稳定碎石集料
-     * 
+     *
      * @param id 水泥稳定碎石集料主键
      * @return 水泥稳定碎石集料
      */
@@ -33,7 +35,7 @@ public class CementStabilizedServiceImpl implements ICementStabilizedService
 
     /**
      * 查询水泥稳定碎石集料列表
-     * 
+     *
      * @param cementStabilized 水泥稳定碎石集料
      * @return 水泥稳定碎石集料
      */
@@ -45,7 +47,7 @@ public class CementStabilizedServiceImpl implements ICementStabilizedService
 
     /**
      * 新增水泥稳定碎石集料
-     * 
+     *
      * @param cementStabilized 水泥稳定碎石集料
      * @return 结果
      */
@@ -57,7 +59,7 @@ public class CementStabilizedServiceImpl implements ICementStabilizedService
 
     /**
      * 修改水泥稳定碎石集料
-     * 
+     *
      * @param cementStabilized 水泥稳定碎石集料
      * @return 结果
      */
@@ -69,7 +71,7 @@ public class CementStabilizedServiceImpl implements ICementStabilizedService
 
     /**
      * 批量删除水泥稳定碎石集料
-     * 
+     *
      * @param ids 需要删除的水泥稳定碎石集料主键
      * @return 结果
      */
@@ -81,7 +83,7 @@ public class CementStabilizedServiceImpl implements ICementStabilizedService
 
     /**
      * 删除水泥稳定碎石集料信息
-     * 
+     *
      * @param id 水泥稳定碎石集料主键
      * @return 结果
      */
@@ -89,5 +91,10 @@ public class CementStabilizedServiceImpl implements ICementStabilizedService
     public int deleteCementStabilizedById(String id)
     {
         return cementStabilizedMapper.deleteCementStabilizedById(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryBar(Map<String, Object> params) {
+        return cementStabilizedMapper.queryBar(params);
     }
 }

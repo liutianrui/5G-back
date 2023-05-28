@@ -49,14 +49,14 @@
           placeholder="请选择采集时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="批次重量 每批次料的总重/吨" prop="batchWeight">
-        <el-input
-          v-model="queryParams.batchWeight"
-          placeholder="请输入批次重量 每批次料的总重/吨"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="批次重量 每批次料的总重/吨" prop="batchWeight">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.batchWeight"-->
+<!--          placeholder="请输入批次重量 每批次料的总重/吨"-->
+<!--          clearable-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -71,7 +71,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['cementstabilized:cementstabilized:add']"
+          v-hasPermi="['cementstabilized:macadam:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -82,7 +82,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['cementstabilized:cementstabilized:edit']"
+          v-hasPermi="['cementstabilized:macadam:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -93,7 +93,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['cementstabilized:cementstabilized:remove']"
+          v-hasPermi="['cementstabilized:macadam:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -103,19 +103,22 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['cementstabilized:cementstabilized:export']"
+          v-hasPermi="['cementstabilized:macadam:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="cementstabilizedList" @selection-change="handleSelectionChange">
+    <div id="lineEcharts" style="height: 280px;"></div>
+
+
+    <el-table v-loading="loading" :data="macadamList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
+<!--      <el-table-column label="${comment}" align="center" prop="id" />-->
       <el-table-column label="拌合站编号" align="center" prop="mixingStationCode" />
       <el-table-column label="设备编号" align="center" prop="equipmentNumber" />
       <el-table-column label="搅拌机名称" align="center" prop="mixingMachineName" />
-      <el-table-column label="施工地点" align="center" prop="constructionSite" />
+<!--      <el-table-column label="施工地点" align="center" prop="constructionSite" />-->
       <el-table-column label="出料时间" align="center" prop="dischargingTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.dischargingTime, '{y}-{m}-{d}') }}</span>
@@ -135,19 +138,19 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['cementstabilized:cementstabilized:edit']"
+            v-hasPermi="['cementstabilized:macadam:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['cementstabilized:cementstabilized:remove']"
+            v-hasPermi="['cementstabilized:macadam:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -310,10 +313,11 @@
 </template>
 
 <script>
-import { listCementstabilized, getCementstabilized, delCementstabilized, addCementstabilized, updateCementstabilized } from "@/api/cementstabilized/cementstabilized";
+import { listMacadam, getMacadam, delMacadam, addMacadam, updateMacadam, getEchartData } from "@/api/cementstabilized/macadam";
+import * as echarts from 'echarts';
 
 export default {
-  name: "Cementstabilized",
+  name: "Macadam",
   data() {
     return {
       // 遮罩层
@@ -329,7 +333,7 @@ export default {
       // 总条数
       total: 0,
       // 水泥稳定碎石集料表格数据
-      cementstabilizedList: [],
+      macadamList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -377,12 +381,87 @@ export default {
   methods: {
     /** 查询水泥稳定碎石集料列表 */
     getList() {
+      this.getEchartData()
+
       this.loading = true;
-      listCementstabilized(this.queryParams).then(response => {
-        this.cementstabilizedList = response.rows;
+      listMacadam(this.queryParams).then(response => {
+        this.macadamList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
+    },
+    getEchartData(){
+      getEchartData(this.queryParams).then((data)=>{
+        this.initLineEchart(data)
+      })
+    },
+    initLineEchart(data){
+      let xAxisData=[]
+      let yAxisData=[]
+      for (let item of data.data){
+        xAxisData.push(item.dischargingTime)
+        yAxisData.push(item.batchWeight)
+      }
+      let lineEcharts = echarts.init(document.getElementById('lineEcharts'))
+      let option = {
+        title: {
+          // text: '未来一周气温变化',
+          // subtext: '纯属虚构'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            //magicType: {type: ['line', 'bar']}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '5%',
+          bottom: '5%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: xAxisData
+        },
+        yAxis: {
+          type: 'value',
+          name:'吨',
+          axisLabel: {
+            formatter: '{value}'
+          }
+        },
+        series: [
+          {
+            name: '水稳物料总重',
+            type: 'line',
+            data: yAxisData,
+            markPoint: {
+              data: [
+                {type: 'max', name: '最大值'},
+                {type: 'min', name: '最小值'}
+              ]
+            },
+            markLine: {
+              data: [
+                {type: 'average', name: '平均值'}
+              ]
+            },
+            itemStyle:{
+              normal:{
+                color:'#409EFF',
+                borderColor:'#409EFF',  //拐点边框颜色
+              }
+            }
+          }
+        ]
+      };
+
+      lineEcharts.setOption(option)
     },
     // 取消按钮
     cancel() {
@@ -466,7 +545,7 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getCementstabilized(id).then(response => {
+      getMacadam(id).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改水泥稳定碎石集料";
@@ -477,13 +556,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateCementstabilized(this.form).then(response => {
+            updateMacadam(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addCementstabilized(this.form).then(response => {
+            addMacadam(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -496,7 +575,7 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$modal.confirm('是否确认删除水泥稳定碎石集料编号为"' + ids + '"的数据项？').then(function() {
-        return delCementstabilized(ids);
+        return delMacadam(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -504,9 +583,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('cementstabilized/cementstabilized/export', {
+      this.download('cementstabilized/macadam/export', {
         ...this.queryParams
-      }, `cementstabilized_${new Date().getTime()}.xlsx`)
+      }, `macadam_${new Date().getTime()}.xlsx`)
     }
   }
 };
