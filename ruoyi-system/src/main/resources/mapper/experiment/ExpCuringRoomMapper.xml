@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.experiment.mapper.ExpCuringRoomMapper">
+    
+    <resultMap type="ExpCuringRoom" id="ExpCuringRoomResult">
+        <result property="id"    column="id"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="gatheringTime"    column="gathering_time"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="humidity"    column="humidity"    />
+        <result property="electricQuantity"    column="electric_quantity"    />
+        <result property="insertTime"    column="insert_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectExpCuringRoomVo">
+        select id, equipment_number, equipment_name, gathering_time, temperature, humidity, electric_quantity, insert_time, is_deleted from exp_curing_room
+    </sql>
+
+    <select id="selectExpCuringRoomList" parameterType="ExpCuringRoom" resultMap="ExpCuringRoomResult">
+        <include refid="selectExpCuringRoomVo"/>
+        <where>  
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="gatheringTime != null "> and gathering_time = #{gatheringTime}</if>
+            <if test="temperature != null  and temperature != ''"> and temperature = #{temperature}</if>
+            <if test="humidity != null  and humidity != ''"> and humidity = #{humidity}</if>
+            <if test="electricQuantity != null "> and electric_quantity = #{electricQuantity}</if>
+        </where>
+    </select>
+    
+    <select id="selectExpCuringRoomById" parameterType="String" resultMap="ExpCuringRoomResult">
+        <include refid="selectExpCuringRoomVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExpCuringRoom" parameterType="ExpCuringRoom">
+        insert into exp_curing_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="equipmentNumber != null">equipment_number,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="gatheringTime != null">gathering_time,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="humidity != null">humidity,</if>
+            <if test="electricQuantity != null">electric_quantity,</if>
+            <if test="insertTime != null">insert_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="equipmentNumber != null">#{equipmentNumber},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="gatheringTime != null">#{gatheringTime},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="humidity != null">#{humidity},</if>
+            <if test="electricQuantity != null">#{electricQuantity},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExpCuringRoom" parameterType="ExpCuringRoom">
+        update exp_curing_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="equipmentNumber != null">equipment_number = #{equipmentNumber},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="gatheringTime != null">gathering_time = #{gatheringTime},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="humidity != null">humidity = #{humidity},</if>
+            <if test="electricQuantity != null">electric_quantity = #{electricQuantity},</if>
+            <if test="insertTime != null">insert_time = #{insertTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExpCuringRoomById" parameterType="String">
+        delete from exp_curing_room where id = #{id}
+    </delete>
+
+    <delete id="deleteExpCuringRoomByIds" parameterType="String">
+        delete from exp_curing_room where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

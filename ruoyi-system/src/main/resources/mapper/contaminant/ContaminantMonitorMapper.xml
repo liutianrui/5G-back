@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.monitor.mapper.ContaminantMonitorMapper">
+    
+    <resultMap type="ContaminantMonitor" id="ContaminantMonitorResult">
+        <result property="id"    column="id"    />
+        <result property="organizationId"    column="organization_id"    />
+        <result property="sectionName"    column="section_name"    />
+        <result property="sectionId"    column="section_id"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="dataSegment"    column="data_segment"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="dataTime"    column="data_time"    />
+    </resultMap>
+
+    <sql id="selectContaminantMonitorVo">
+        select id, organization_id, section_name, section_id, equipment_number, equipment_name, data_segment, create_time, data_time from contaminant_monitor
+    </sql>
+
+    <select id="selectContaminantMonitorList" parameterType="ContaminantMonitor" resultMap="ContaminantMonitorResult">
+        <include refid="selectContaminantMonitorVo"/>
+        <where>  
+            <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number = #{equipmentNumber}</if>
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="dataSegment != null  and dataSegment != ''"> and data_segment = #{dataSegment}</if>
+        </where>
+    </select>
+    
+    <select id="selectContaminantMonitorById" parameterType="String" resultMap="ContaminantMonitorResult">
+        <include refid="selectContaminantMonitorVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertContaminantMonitor" parameterType="ContaminantMonitor">
+        insert into contaminant_monitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="organizationId != null">organization_id,</if>
+            <if test="sectionName != null">section_name,</if>
+            <if test="sectionId != null">section_id,</if>
+            <if test="equipmentNumber != null">equipment_number,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="dataSegment != null">data_segment,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="dataTime != null">data_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="organizationId != null">#{organizationId},</if>
+            <if test="sectionName != null">#{sectionName},</if>
+            <if test="sectionId != null">#{sectionId},</if>
+            <if test="equipmentNumber != null">#{equipmentNumber},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="dataSegment != null">#{dataSegment},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="dataTime != null">#{dataTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateContaminantMonitor" parameterType="ContaminantMonitor">
+        update contaminant_monitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="organizationId != null">organization_id = #{organizationId},</if>
+            <if test="sectionName != null">section_name = #{sectionName},</if>
+            <if test="sectionId != null">section_id = #{sectionId},</if>
+            <if test="equipmentNumber != null">equipment_number = #{equipmentNumber},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="dataSegment != null">data_segment = #{dataSegment},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="dataTime != null">data_time = #{dataTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteContaminantMonitorById" parameterType="String">
+        delete from contaminant_monitor where id = #{id}
+    </delete>
+
+    <delete id="deleteContaminantMonitorByIds" parameterType="String">
+        delete from contaminant_monitor where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
