@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.asphalt.mapper.AsphaltConcreteCollectionMapper">
+
+    <resultMap type="AsphaltConcreteCollection" id="AsphaltConcreteCollectionResult">
+        <result property="id"    column="id"    />
+        <result property="organizationId"    column="organization_id"    />
+        <result property="sectionId"    column="section_id"    />
+        <result property="mixingStationCode"    column="mixing_station_code"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="mixingMachineName"    column="mixing_machine_name"    />
+        <result property="dataNumber"    column="data_number"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="constructionSite"    column="construction_site"    />
+        <result property="dischargingTime"    column="discharging_time"    />
+        <result property="gatheringTime"    column="gathering_time"    />
+        <result property="uploadTime"    column="upload_time"    />
+        <result property="proportionCode"    column="proportion_code"    />
+        <result property="excessState"    column="excess_state"    />
+        <result property="taskNo"    column="task_no"    />
+        <result property="batchWeight"    column="batch_weight"    />
+        <result property="clientNumber"    column="client_number"    />
+        <result property="layerPosition"    column="layer_position"    />
+        <result property="mixingDuration"    column="mixing_duration"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="asphaltAggregateRatioAct"    column="asphalt_aggregate_ratio_act"    />
+        <result property="asphaltAct"    column="asphalt_act"    />
+        <result property="sand1Act"    column="sand1_act"    />
+        <result property="sand2Act"    column="sand2_act"    />
+        <result property="gravel1Act"    column="gravel1_act"    />
+        <result property="gravel2Act"    column="gravel2_act"    />
+        <result property="gravel3Act"    column="gravel3_act"    />
+        <result property="gravel4Act"    column="gravel4_act"    />
+        <result property="cement1Act"    column="cement1_act"    />
+        <result property="recycledMaterialAct"    column="recycled_material_act"    />
+        <result property="slagPowderAct"    column="slag_powder_act"    />
+        <result property="asphaltAggregateRatioTheo"    column="asphalt_aggregate_ratio_theo"    />
+        <result property="asphaltTheo"    column="asphalt_theo"    />
+        <result property="sand1Theo"    column="sand1_theo"    />
+        <result property="sand2Theo"    column="sand2_theo"    />
+        <result property="gravel1Theo"    column="gravel1_theo"    />
+        <result property="gravel2Theo"    column="gravel2_theo"    />
+        <result property="gravel3Theo"    column="gravel3_theo"    />
+        <result property="gravel4Theo"    column="gravel4_theo"    />
+        <result property="slagPowderTheo"    column="slag_powder_theo"    />
+        <result property="cement1Theo"    column="cement1_theo"    />
+        <result property="recycledMaterialTheo"    column="recycled_material_theo"    />
+        <result property="sand1ActPct"    column="sand1_act_pct"    />
+        <result property="sand2ActPct"    column="sand2_act_pct"    />
+        <result property="gravel1ActPct"    column="gravel1_act_pct"    />
+        <result property="gravel2ActPct"    column="gravel2_act_pct"    />
+        <result property="gravel3ActPct"    column="gravel3_act_pct"    />
+        <result property="gravel4ActPct"    column="gravel4_act_pct"    />
+        <result property="slagPowderActPct"    column="slag_powder_act_pct"    />
+        <result property="cement1ActPct"    column="cement1_act_pct"    />
+        <result property="recycledMaterialActPct"    column="recycled_material_act_pct"    />
+        <result property="insertDate"    column="insert_date"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectAsphaltConcreteCollectionVo">
+        select id, organization_id, section_id, mixing_station_code, equipment_number, mixing_machine_name, data_number, project_name, construction_site, discharging_time, gathering_time, upload_time, proportion_code, excess_state, task_no, batch_weight, client_number, layer_position, mixing_duration, temperature, asphalt_aggregate_ratio_act, asphalt_act, sand1_act, sand2_act, gravel1_act, gravel2_act, gravel3_act, gravel4_act, cement1_act, recycled_material_act, slag_powder_act, asphalt_aggregate_ratio_theo, asphalt_theo, sand1_theo, sand2_theo, gravel1_theo, gravel2_theo, gravel3_theo, gravel4_theo, slag_powder_theo, cement1_theo, recycled_material_theo, sand1_act_pct, sand2_act_pct, gravel1_act_pct, gravel2_act_pct, gravel3_act_pct, gravel4_act_pct, slag_powder_act_pct, cement1_act_pct, recycled_material_act_pct, insert_date, is_deleted from asphalt_concrete_collection
+    </sql>
+
+    <select id="selectAsphaltConcreteCollectionList" parameterType="AsphaltConcreteCollection" resultMap="AsphaltConcreteCollectionResult">
+        <include refid="selectAsphaltConcreteCollectionVo"/>
+        <where>
+            <if test="organizationId != null  and organizationId != ''"> and organization_id = #{organizationId}</if>
+            <if test="sectionId != null  and sectionId != ''"> and section_id = #{sectionId}</if>
+            <if test="mixingStationCode != null  and mixingStationCode != ''"> and mixing_station_code = #{mixingStationCode}</if>
+            <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number = #{equipmentNumber}</if>
+            <if test="mixingMachineName != null  and mixingMachineName != ''"> and mixing_machine_name like concat('%', #{mixingMachineName}, '%')</if>
+            <if test="dataNumber != null  and dataNumber != ''"> and data_number = #{dataNumber}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="constructionSite != null  and constructionSite != ''"> and construction_site = #{constructionSite}</if>
+            <if test="dischargingTime != null "> and discharging_time = #{dischargingTime}</if>
+            <if test="gatheringTime != null "> and gathering_time = #{gatheringTime}</if>
+            <if test="uploadTime != null "> and upload_time = #{uploadTime}</if>
+            <if test="proportionCode != null  and proportionCode != ''"> and proportion_code = #{proportionCode}</if>
+            <if test="excessState != null  and excessState != ''"> and excess_state = #{excessState}</if>
+            <if test="taskNo != null  and taskNo != ''"> and task_no = #{taskNo}</if>
+            <if test="batchWeight != null  and batchWeight != ''"> and batch_weight = #{batchWeight}</if>
+            <if test="clientNumber != null  and clientNumber != ''"> and client_number = #{clientNumber}</if>
+            <if test="layerPosition != null  and layerPosition != ''"> and layer_position = #{layerPosition}</if>
+            <if test="mixingDuration != null  and mixingDuration != ''"> and mixing_duration = #{mixingDuration}</if>
+            <if test="temperature != null  and temperature != ''"> and temperature = #{temperature}</if>
+            <if test="asphaltAggregateRatioAct != null "> and asphalt_aggregate_ratio_act = #{asphaltAggregateRatioAct}</if>
+            <if test="asphaltAct != null "> and asphalt_act = #{asphaltAct}</if>
+            <if test="sand1Act != null "> and sand1_act = #{sand1Act}</if>
+            <if test="sand2Act != null "> and sand2_act = #{sand2Act}</if>
+            <if test="gravel1Act != null "> and gravel1_act = #{gravel1Act}</if>
+            <if test="gravel2Act != null "> and gravel2_act = #{gravel2Act}</if>
+            <if test="gravel3Act != null "> and gravel3_act = #{gravel3Act}</if>
+            <if test="gravel4Act != null "> and gravel4_act = #{gravel4Act}</if>
+            <if test="cement1Act != null "> and cement1_act = #{cement1Act}</if>
+            <if test="recycledMaterialAct != null "> and recycled_material_act = #{recycledMaterialAct}</if>
+            <if test="slagPowderAct != null "> and slag_powder_act = #{slagPowderAct}</if>
+            <if test="asphaltAggregateRatioTheo != null "> and asphalt_aggregate_ratio_theo = #{asphaltAggregateRatioTheo}</if>
+            <if test="asphaltTheo != null "> and asphalt_theo = #{asphaltTheo}</if>
+            <if test="sand1Theo != null "> and sand1_theo = #{sand1Theo}</if>
+            <if test="sand2Theo != null "> and sand2_theo = #{sand2Theo}</if>
+            <if test="gravel1Theo != null "> and gravel1_theo = #{gravel1Theo}</if>
+            <if test="gravel2Theo != null "> and gravel2_theo = #{gravel2Theo}</if>
+            <if test="gravel3Theo != null "> and gravel3_theo = #{gravel3Theo}</if>
+            <if test="gravel4Theo != null "> and gravel4_theo = #{gravel4Theo}</if>
+            <if test="slagPowderTheo != null "> and slag_powder_theo = #{slagPowderTheo}</if>
+            <if test="cement1Theo != null "> and cement1_theo = #{cement1Theo}</if>
+            <if test="recycledMaterialTheo != null "> and recycled_material_theo = #{recycledMaterialTheo}</if>
+            <if test="sand1ActPct != null "> and sand1_act_pct = #{sand1ActPct}</if>
+            <if test="sand2ActPct != null "> and sand2_act_pct = #{sand2ActPct}</if>
+            <if test="gravel1ActPct != null "> and gravel1_act_pct = #{gravel1ActPct}</if>
+            <if test="gravel2ActPct != null "> and gravel2_act_pct = #{gravel2ActPct}</if>
+            <if test="gravel3ActPct != null "> and gravel3_act_pct = #{gravel3ActPct}</if>
+            <if test="gravel4ActPct != null "> and gravel4_act_pct = #{gravel4ActPct}</if>
+            <if test="slagPowderActPct != null "> and slag_powder_act_pct = #{slagPowderActPct}</if>
+            <if test="cement1ActPct != null "> and cement1_act_pct = #{cement1ActPct}</if>
+            <if test="recycledMaterialActPct != null "> and recycled_material_act_pct = #{recycledMaterialActPct}</if>
+            <if test="insertDate != null "> and insert_date = #{insertDate}</if>
+            <if test="isDeleted != null  and isDeleted != ''"> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+
+    <select id="selectAsphaltConcreteCollectionById" parameterType="String" resultMap="AsphaltConcreteCollectionResult">
+        <include refid="selectAsphaltConcreteCollectionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAsphaltConcreteCollection" parameterType="AsphaltConcreteCollection">
+        insert into asphalt_concrete_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="organizationId != null">organization_id,</if>
+            <if test="sectionId != null">section_id,</if>
+            <if test="mixingStationCode != null">mixing_station_code,</if>
+            <if test="equipmentNumber != null">equipment_number,</if>
+            <if test="mixingMachineName != null">mixing_machine_name,</if>
+            <if test="dataNumber != null">data_number,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="constructionSite != null">construction_site,</if>
+            <if test="dischargingTime != null">discharging_time,</if>
+            <if test="gatheringTime != null">gathering_time,</if>
+            <if test="uploadTime != null">upload_time,</if>
+            <if test="proportionCode != null">proportion_code,</if>
+            <if test="excessState != null">excess_state,</if>
+            <if test="taskNo != null">task_no,</if>
+            <if test="batchWeight != null">batch_weight,</if>
+            <if test="clientNumber != null">client_number,</if>
+            <if test="layerPosition != null">layer_position,</if>
+            <if test="mixingDuration != null">mixing_duration,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="asphaltAggregateRatioAct != null">asphalt_aggregate_ratio_act,</if>
+            <if test="asphaltAct != null">asphalt_act,</if>
+            <if test="sand1Act != null">sand1_act,</if>
+            <if test="sand2Act != null">sand2_act,</if>
+            <if test="gravel1Act != null">gravel1_act,</if>
+            <if test="gravel2Act != null">gravel2_act,</if>
+            <if test="gravel3Act != null">gravel3_act,</if>
+            <if test="gravel4Act != null">gravel4_act,</if>
+            <if test="cement1Act != null">cement1_act,</if>
+            <if test="recycledMaterialAct != null">recycled_material_act,</if>
+            <if test="slagPowderAct != null">slag_powder_act,</if>
+            <if test="asphaltAggregateRatioTheo != null">asphalt_aggregate_ratio_theo,</if>
+            <if test="asphaltTheo != null">asphalt_theo,</if>
+            <if test="sand1Theo != null">sand1_theo,</if>
+            <if test="sand2Theo != null">sand2_theo,</if>
+            <if test="gravel1Theo != null">gravel1_theo,</if>
+            <if test="gravel2Theo != null">gravel2_theo,</if>
+            <if test="gravel3Theo != null">gravel3_theo,</if>
+            <if test="gravel4Theo != null">gravel4_theo,</if>
+            <if test="slagPowderTheo != null">slag_powder_theo,</if>
+            <if test="cement1Theo != null">cement1_theo,</if>
+            <if test="recycledMaterialTheo != null">recycled_material_theo,</if>
+            <if test="sand1ActPct != null">sand1_act_pct,</if>
+            <if test="sand2ActPct != null">sand2_act_pct,</if>
+            <if test="gravel1ActPct != null">gravel1_act_pct,</if>
+            <if test="gravel2ActPct != null">gravel2_act_pct,</if>
+            <if test="gravel3ActPct != null">gravel3_act_pct,</if>
+            <if test="gravel4ActPct != null">gravel4_act_pct,</if>
+            <if test="slagPowderActPct != null">slag_powder_act_pct,</if>
+            <if test="cement1ActPct != null">cement1_act_pct,</if>
+            <if test="recycledMaterialActPct != null">recycled_material_act_pct,</if>
+            <if test="insertDate != null">insert_date,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="organizationId != null">#{organizationId},</if>
+            <if test="sectionId != null">#{sectionId},</if>
+            <if test="mixingStationCode != null">#{mixingStationCode},</if>
+            <if test="equipmentNumber != null">#{equipmentNumber},</if>
+            <if test="mixingMachineName != null">#{mixingMachineName},</if>
+            <if test="dataNumber != null">#{dataNumber},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="constructionSite != null">#{constructionSite},</if>
+            <if test="dischargingTime != null">#{dischargingTime},</if>
+            <if test="gatheringTime != null">#{gatheringTime},</if>
+            <if test="uploadTime != null">#{uploadTime},</if>
+            <if test="proportionCode != null">#{proportionCode},</if>
+            <if test="excessState != null">#{excessState},</if>
+            <if test="taskNo != null">#{taskNo},</if>
+            <if test="batchWeight != null">#{batchWeight},</if>
+            <if test="clientNumber != null">#{clientNumber},</if>
+            <if test="layerPosition != null">#{layerPosition},</if>
+            <if test="mixingDuration != null">#{mixingDuration},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="asphaltAggregateRatioAct != null">#{asphaltAggregateRatioAct},</if>
+            <if test="asphaltAct != null">#{asphaltAct},</if>
+            <if test="sand1Act != null">#{sand1Act},</if>
+            <if test="sand2Act != null">#{sand2Act},</if>
+            <if test="gravel1Act != null">#{gravel1Act},</if>
+            <if test="gravel2Act != null">#{gravel2Act},</if>
+            <if test="gravel3Act != null">#{gravel3Act},</if>
+            <if test="gravel4Act != null">#{gravel4Act},</if>
+            <if test="cement1Act != null">#{cement1Act},</if>
+            <if test="recycledMaterialAct != null">#{recycledMaterialAct},</if>
+            <if test="slagPowderAct != null">#{slagPowderAct},</if>
+            <if test="asphaltAggregateRatioTheo != null">#{asphaltAggregateRatioTheo},</if>
+            <if test="asphaltTheo != null">#{asphaltTheo},</if>
+            <if test="sand1Theo != null">#{sand1Theo},</if>
+            <if test="sand2Theo != null">#{sand2Theo},</if>
+            <if test="gravel1Theo != null">#{gravel1Theo},</if>
+            <if test="gravel2Theo != null">#{gravel2Theo},</if>
+            <if test="gravel3Theo != null">#{gravel3Theo},</if>
+            <if test="gravel4Theo != null">#{gravel4Theo},</if>
+            <if test="slagPowderTheo != null">#{slagPowderTheo},</if>
+            <if test="cement1Theo != null">#{cement1Theo},</if>
+            <if test="recycledMaterialTheo != null">#{recycledMaterialTheo},</if>
+            <if test="sand1ActPct != null">#{sand1ActPct},</if>
+            <if test="sand2ActPct != null">#{sand2ActPct},</if>
+            <if test="gravel1ActPct != null">#{gravel1ActPct},</if>
+            <if test="gravel2ActPct != null">#{gravel2ActPct},</if>
+            <if test="gravel3ActPct != null">#{gravel3ActPct},</if>
+            <if test="gravel4ActPct != null">#{gravel4ActPct},</if>
+            <if test="slagPowderActPct != null">#{slagPowderActPct},</if>
+            <if test="cement1ActPct != null">#{cement1ActPct},</if>
+            <if test="recycledMaterialActPct != null">#{recycledMaterialActPct},</if>
+            <if test="insertDate != null">#{insertDate},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAsphaltConcreteCollection" parameterType="AsphaltConcreteCollection">
+        update asphalt_concrete_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="organizationId != null">organization_id = #{organizationId},</if>
+            <if test="sectionId != null">section_id = #{sectionId},</if>
+            <if test="mixingStationCode != null">mixing_station_code = #{mixingStationCode},</if>
+            <if test="equipmentNumber != null">equipment_number = #{equipmentNumber},</if>
+            <if test="mixingMachineName != null">mixing_machine_name = #{mixingMachineName},</if>
+            <if test="dataNumber != null">data_number = #{dataNumber},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="constructionSite != null">construction_site = #{constructionSite},</if>
+            <if test="dischargingTime != null">discharging_time = #{dischargingTime},</if>
+            <if test="gatheringTime != null">gathering_time = #{gatheringTime},</if>
+            <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="proportionCode != null">proportion_code = #{proportionCode},</if>
+            <if test="excessState != null">excess_state = #{excessState},</if>
+            <if test="taskNo != null">task_no = #{taskNo},</if>
+            <if test="batchWeight != null">batch_weight = #{batchWeight},</if>
+            <if test="clientNumber != null">client_number = #{clientNumber},</if>
+            <if test="layerPosition != null">layer_position = #{layerPosition},</if>
+            <if test="mixingDuration != null">mixing_duration = #{mixingDuration},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="asphaltAggregateRatioAct != null">asphalt_aggregate_ratio_act = #{asphaltAggregateRatioAct},</if>
+            <if test="asphaltAct != null">asphalt_act = #{asphaltAct},</if>
+            <if test="sand1Act != null">sand1_act = #{sand1Act},</if>
+            <if test="sand2Act != null">sand2_act = #{sand2Act},</if>
+            <if test="gravel1Act != null">gravel1_act = #{gravel1Act},</if>
+            <if test="gravel2Act != null">gravel2_act = #{gravel2Act},</if>
+            <if test="gravel3Act != null">gravel3_act = #{gravel3Act},</if>
+            <if test="gravel4Act != null">gravel4_act = #{gravel4Act},</if>
+            <if test="cement1Act != null">cement1_act = #{cement1Act},</if>
+            <if test="recycledMaterialAct != null">recycled_material_act = #{recycledMaterialAct},</if>
+            <if test="slagPowderAct != null">slag_powder_act = #{slagPowderAct},</if>
+            <if test="asphaltAggregateRatioTheo != null">asphalt_aggregate_ratio_theo = #{asphaltAggregateRatioTheo},</if>
+            <if test="asphaltTheo != null">asphalt_theo = #{asphaltTheo},</if>
+            <if test="sand1Theo != null">sand1_theo = #{sand1Theo},</if>
+            <if test="sand2Theo != null">sand2_theo = #{sand2Theo},</if>
+            <if test="gravel1Theo != null">gravel1_theo = #{gravel1Theo},</if>
+            <if test="gravel2Theo != null">gravel2_theo = #{gravel2Theo},</if>
+            <if test="gravel3Theo != null">gravel3_theo = #{gravel3Theo},</if>
+            <if test="gravel4Theo != null">gravel4_theo = #{gravel4Theo},</if>
+            <if test="slagPowderTheo != null">slag_powder_theo = #{slagPowderTheo},</if>
+            <if test="cement1Theo != null">cement1_theo = #{cement1Theo},</if>
+            <if test="recycledMaterialTheo != null">recycled_material_theo = #{recycledMaterialTheo},</if>
+            <if test="sand1ActPct != null">sand1_act_pct = #{sand1ActPct},</if>
+            <if test="sand2ActPct != null">sand2_act_pct = #{sand2ActPct},</if>
+            <if test="gravel1ActPct != null">gravel1_act_pct = #{gravel1ActPct},</if>
+            <if test="gravel2ActPct != null">gravel2_act_pct = #{gravel2ActPct},</if>
+            <if test="gravel3ActPct != null">gravel3_act_pct = #{gravel3ActPct},</if>
+            <if test="gravel4ActPct != null">gravel4_act_pct = #{gravel4ActPct},</if>
+            <if test="slagPowderActPct != null">slag_powder_act_pct = #{slagPowderActPct},</if>
+            <if test="cement1ActPct != null">cement1_act_pct = #{cement1ActPct},</if>
+            <if test="recycledMaterialActPct != null">recycled_material_act_pct = #{recycledMaterialActPct},</if>
+            <if test="insertDate != null">insert_date = #{insertDate},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAsphaltConcreteCollectionById" parameterType="String">
+        delete from asphalt_concrete_collection where id = #{id}
+    </delete>
+
+    <delete id="deleteAsphaltConcreteCollectionByIds" parameterType="String">
+        delete from asphalt_concrete_collection where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--查询柱状图数据-->
+    <select id="queryBar" resultType="map">
+        SELECT
+        ROUND(SUM(a.asphalt_act) / 1000, 3) asphaltAct,
+        ROUND(SUM(a.sand1_act) / 1000, 3) sand1Act,
+        ROUND(SUM(a.sand2_act) / 1000, 3) sand2Act,
+        ROUND(SUM(a.gravel1_act) / 1000, 3) gravel1Act,
+        ROUND(SUM(a.gravel2_act) / 1000, 3) gravel2Act,
+        ROUND(SUM(a.gravel3_act) / 1000, 3) gravel3Act,
+        ROUND(SUM(a.gravel4_act) / 1000, 3) gravel4Act,
+        ROUND(SUM(a.cement1_act) / 1000, 3) cement1Act,
+        ROUND(
+        SUM(a.recycled_material_act) / 1000,
+        3
+        ) recycledMaterialAct,
+        ROUND(
+        SUM(a.slag_powder_act) / 1000,
+        3
+        ) slagPowderAct,
+        DATE_FORMAT(
+        a.discharging_time,
+        '%Y-%m-%d'
+        ) dischargingTime
+        FROM
+        asphalt_concrete_collection AS a
+        WHERE
+        1=1
+        <if test="minTime != null and minTime != ''">
+            and DATE_FORMAT(discharging_time,'%Y-%m-%d') &gt;= #{minTime}
+        </if>
+        <if test="maxTime != null and maxTime != ''">
+            and DATE_FORMAT(discharging_time,'%Y-%m-%d') &lt;= #{maxTime}
+        </if>
+        <if test="mixingMachineName != null and mixingMachineName !=''">
+            and mixingMachineName like concat('%',#{mixingMachineName},'%')
+        </if>
+        GROUP BY
+        DATE_FORMAT(
+        a.discharging_time,
+        '%Y-%m-%d'
+        )
+        ORDER BY
+        a.discharging_time DESC
+    </select>
+</mapper>
