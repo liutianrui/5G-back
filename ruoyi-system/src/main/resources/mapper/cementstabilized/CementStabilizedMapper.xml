@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cementstabilized.mapper.CementStabilizedMapper">
+    
+    <resultMap type="CementStabilized" id="CementStabilizedResult">
+        <result property="id"    column="id"    />
+        <result property="organizationId"    column="organization_id"    />
+        <result property="sectionId"    column="section_id"    />
+        <result property="mixingStationCode"    column="mixing_station_code"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="mixingMachineName"    column="mixing_machine_name"    />
+        <result property="dataNumber"    column="data_number"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="constructionSite"    column="construction_site"    />
+        <result property="dischargingTime"    column="discharging_time"    />
+        <result property="gatheringTime"    column="gathering_time"    />
+        <result property="uploadTime"    column="upload_time"    />
+        <result property="proportionCode"    column="proportion_code"    />
+        <result property="excessState"    column="excess_state"    />
+        <result property="taskNo"    column="task_no"    />
+        <result property="batchWeight"    column="batch_weight"    />
+        <result property="materialYield1"    column="material_yield_1"    />
+        <result property="materialYield2"    column="material_yield_2"    />
+        <result property="materialYield3"    column="material_yield_3"    />
+        <result property="materialYield4"    column="material_yield_4"    />
+        <result property="materialYield5"    column="material_yield_5"    />
+        <result property="materialYield6"    column="material_yield_6"    />
+        <result property="materialYield7"    column="material_yield_7"    />
+        <result property="materialYield8"    column="material_yield_8"    />
+        <result property="materialYield9"    column="material_yield_9"    />
+        <result property="materialGiven1"    column="material_given_1"    />
+        <result property="materialGiven2"    column="material_given_2"    />
+        <result property="materialGiven3"    column="material_given_3"    />
+        <result property="materialGiven4"    column="material_given_4"    />
+        <result property="materialGiven5"    column="material_given_5"    />
+        <result property="materialGiven6"    column="material_given_6"    />
+        <result property="materialGiven7"    column="material_given_7"    />
+        <result property="materialGiven8"    column="material_given_8"    />
+        <result property="materialGiven9"    column="material_given_9"    />
+        <result property="materialFlow1"    column="material_flow_1"    />
+        <result property="materialFlow2"    column="material_flow_2"    />
+        <result property="materialFlow3"    column="material_flow_3"    />
+        <result property="materialFlow4"    column="material_flow_4"    />
+        <result property="materialFlow5"    column="material_flow_5"    />
+        <result property="materialFlow6"    column="material_flow_6"    />
+        <result property="materialFlow7"    column="material_flow_7"    />
+        <result property="materialFlow8"    column="material_flow_8"    />
+        <result property="materialFlow9"    column="material_flow_9"    />
+        <result property="insertTime"    column="insert_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectCementStabilizedVo">
+        select id, organization_id, section_id, mixing_station_code, equipment_number, mixing_machine_name, data_number, project_name, construction_site, discharging_time, gathering_time, upload_time, proportion_code, excess_state, task_no, batch_weight, material_yield_1, material_yield_2, material_yield_3, material_yield_4, material_yield_5, material_yield_6, material_yield_7, material_yield_8, material_yield_9, material_given_1, material_given_2, material_given_3, material_given_4, material_given_5, material_given_6, material_given_7, material_given_8, material_given_9, material_flow_1, material_flow_2, material_flow_3, material_flow_4, material_flow_5, material_flow_6, material_flow_7, material_flow_8, material_flow_9, insert_time, is_deleted from cement_stabilized_macadam_collection
+    </sql>
+
+    <select id="selectCementStabilizedList" parameterType="CementStabilized" resultMap="CementStabilizedResult">
+        <include refid="selectCementStabilizedVo"/>
+        <where>  
+            <if test="mixingStationCode != null  and mixingStationCode != ''"> and mixing_station_code = #{mixingStationCode}</if>
+            <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number = #{equipmentNumber}</if>
+            <if test="mixingMachineName != null  and mixingMachineName != ''"> and mixing_machine_name like concat('%', #{mixingMachineName}, '%')</if>
+            <if test="constructionSite != null  and constructionSite != ''"> and construction_site = #{constructionSite}</if>
+            <if test="dischargingTime != null "> and discharging_time = #{dischargingTime}</if>
+            <if test="gatheringTime != null "> and gathering_time = #{gatheringTime}</if>
+            <if test="batchWeight != null  and batchWeight != ''"> and batch_weight = #{batchWeight}</if>
+        </where>
+    </select>
+    
+    <select id="selectCementStabilizedById" parameterType="String" resultMap="CementStabilizedResult">
+        <include refid="selectCementStabilizedVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCementStabilized" parameterType="CementStabilized">
+        insert into cement_stabilized_macadam_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="organizationId != null and organizationId != ''">organization_id,</if>
+            <if test="sectionId != null and sectionId != ''">section_id,</if>
+            <if test="mixingStationCode != null and mixingStationCode != ''">mixing_station_code,</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">equipment_number,</if>
+            <if test="mixingMachineName != null and mixingMachineName != ''">mixing_machine_name,</if>
+            <if test="dataNumber != null and dataNumber != ''">data_number,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="constructionSite != null">construction_site,</if>
+            <if test="dischargingTime != null">discharging_time,</if>
+            <if test="gatheringTime != null">gathering_time,</if>
+            <if test="uploadTime != null">upload_time,</if>
+            <if test="proportionCode != null">proportion_code,</if>
+            <if test="excessState != null">excess_state,</if>
+            <if test="taskNo != null">task_no,</if>
+            <if test="batchWeight != null">batch_weight,</if>
+            <if test="materialYield1 != null">material_yield_1,</if>
+            <if test="materialYield2 != null">material_yield_2,</if>
+            <if test="materialYield3 != null">material_yield_3,</if>
+            <if test="materialYield4 != null">material_yield_4,</if>
+            <if test="materialYield5 != null">material_yield_5,</if>
+            <if test="materialYield6 != null">material_yield_6,</if>
+            <if test="materialYield7 != null">material_yield_7,</if>
+            <if test="materialYield8 != null">material_yield_8,</if>
+            <if test="materialYield9 != null">material_yield_9,</if>
+            <if test="materialGiven1 != null">material_given_1,</if>
+            <if test="materialGiven2 != null">material_given_2,</if>
+            <if test="materialGiven3 != null">material_given_3,</if>
+            <if test="materialGiven4 != null">material_given_4,</if>
+            <if test="materialGiven5 != null">material_given_5,</if>
+            <if test="materialGiven6 != null">material_given_6,</if>
+            <if test="materialGiven7 != null">material_given_7,</if>
+            <if test="materialGiven8 != null">material_given_8,</if>
+            <if test="materialGiven9 != null">material_given_9,</if>
+            <if test="materialFlow1 != null">material_flow_1,</if>
+            <if test="materialFlow2 != null">material_flow_2,</if>
+            <if test="materialFlow3 != null">material_flow_3,</if>
+            <if test="materialFlow4 != null">material_flow_4,</if>
+            <if test="materialFlow5 != null">material_flow_5,</if>
+            <if test="materialFlow6 != null">material_flow_6,</if>
+            <if test="materialFlow7 != null">material_flow_7,</if>
+            <if test="materialFlow8 != null">material_flow_8,</if>
+            <if test="materialFlow9 != null">material_flow_9,</if>
+            <if test="insertTime != null">insert_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="organizationId != null and organizationId != ''">#{organizationId},</if>
+            <if test="sectionId != null and sectionId != ''">#{sectionId},</if>
+            <if test="mixingStationCode != null and mixingStationCode != ''">#{mixingStationCode},</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">#{equipmentNumber},</if>
+            <if test="mixingMachineName != null and mixingMachineName != ''">#{mixingMachineName},</if>
+            <if test="dataNumber != null and dataNumber != ''">#{dataNumber},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="constructionSite != null">#{constructionSite},</if>
+            <if test="dischargingTime != null">#{dischargingTime},</if>
+            <if test="gatheringTime != null">#{gatheringTime},</if>
+            <if test="uploadTime != null">#{uploadTime},</if>
+            <if test="proportionCode != null">#{proportionCode},</if>
+            <if test="excessState != null">#{excessState},</if>
+            <if test="taskNo != null">#{taskNo},</if>
+            <if test="batchWeight != null">#{batchWeight},</if>
+            <if test="materialYield1 != null">#{materialYield1},</if>
+            <if test="materialYield2 != null">#{materialYield2},</if>
+            <if test="materialYield3 != null">#{materialYield3},</if>
+            <if test="materialYield4 != null">#{materialYield4},</if>
+            <if test="materialYield5 != null">#{materialYield5},</if>
+            <if test="materialYield6 != null">#{materialYield6},</if>
+            <if test="materialYield7 != null">#{materialYield7},</if>
+            <if test="materialYield8 != null">#{materialYield8},</if>
+            <if test="materialYield9 != null">#{materialYield9},</if>
+            <if test="materialGiven1 != null">#{materialGiven1},</if>
+            <if test="materialGiven2 != null">#{materialGiven2},</if>
+            <if test="materialGiven3 != null">#{materialGiven3},</if>
+            <if test="materialGiven4 != null">#{materialGiven4},</if>
+            <if test="materialGiven5 != null">#{materialGiven5},</if>
+            <if test="materialGiven6 != null">#{materialGiven6},</if>
+            <if test="materialGiven7 != null">#{materialGiven7},</if>
+            <if test="materialGiven8 != null">#{materialGiven8},</if>
+            <if test="materialGiven9 != null">#{materialGiven9},</if>
+            <if test="materialFlow1 != null">#{materialFlow1},</if>
+            <if test="materialFlow2 != null">#{materialFlow2},</if>
+            <if test="materialFlow3 != null">#{materialFlow3},</if>
+            <if test="materialFlow4 != null">#{materialFlow4},</if>
+            <if test="materialFlow5 != null">#{materialFlow5},</if>
+            <if test="materialFlow6 != null">#{materialFlow6},</if>
+            <if test="materialFlow7 != null">#{materialFlow7},</if>
+            <if test="materialFlow8 != null">#{materialFlow8},</if>
+            <if test="materialFlow9 != null">#{materialFlow9},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCementStabilized" parameterType="CementStabilized">
+        update cement_stabilized_macadam_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="organizationId != null and organizationId != ''">organization_id = #{organizationId},</if>
+            <if test="sectionId != null and sectionId != ''">section_id = #{sectionId},</if>
+            <if test="mixingStationCode != null and mixingStationCode != ''">mixing_station_code = #{mixingStationCode},</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">equipment_number = #{equipmentNumber},</if>
+            <if test="mixingMachineName != null and mixingMachineName != ''">mixing_machine_name = #{mixingMachineName},</if>
+            <if test="dataNumber != null and dataNumber != ''">data_number = #{dataNumber},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="constructionSite != null">construction_site = #{constructionSite},</if>
+            <if test="dischargingTime != null">discharging_time = #{dischargingTime},</if>
+            <if test="gatheringTime != null">gathering_time = #{gatheringTime},</if>
+            <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="proportionCode != null">proportion_code = #{proportionCode},</if>
+            <if test="excessState != null">excess_state = #{excessState},</if>
+            <if test="taskNo != null">task_no = #{taskNo},</if>
+            <if test="batchWeight != null">batch_weight = #{batchWeight},</if>
+            <if test="materialYield1 != null">material_yield_1 = #{materialYield1},</if>
+            <if test="materialYield2 != null">material_yield_2 = #{materialYield2},</if>
+            <if test="materialYield3 != null">material_yield_3 = #{materialYield3},</if>
+            <if test="materialYield4 != null">material_yield_4 = #{materialYield4},</if>
+            <if test="materialYield5 != null">material_yield_5 = #{materialYield5},</if>
+            <if test="materialYield6 != null">material_yield_6 = #{materialYield6},</if>
+            <if test="materialYield7 != null">material_yield_7 = #{materialYield7},</if>
+            <if test="materialYield8 != null">material_yield_8 = #{materialYield8},</if>
+            <if test="materialYield9 != null">material_yield_9 = #{materialYield9},</if>
+            <if test="materialGiven1 != null">material_given_1 = #{materialGiven1},</if>
+            <if test="materialGiven2 != null">material_given_2 = #{materialGiven2},</if>
+            <if test="materialGiven3 != null">material_given_3 = #{materialGiven3},</if>
+            <if test="materialGiven4 != null">material_given_4 = #{materialGiven4},</if>
+            <if test="materialGiven5 != null">material_given_5 = #{materialGiven5},</if>
+            <if test="materialGiven6 != null">material_given_6 = #{materialGiven6},</if>
+            <if test="materialGiven7 != null">material_given_7 = #{materialGiven7},</if>
+            <if test="materialGiven8 != null">material_given_8 = #{materialGiven8},</if>
+            <if test="materialGiven9 != null">material_given_9 = #{materialGiven9},</if>
+            <if test="materialFlow1 != null">material_flow_1 = #{materialFlow1},</if>
+            <if test="materialFlow2 != null">material_flow_2 = #{materialFlow2},</if>
+            <if test="materialFlow3 != null">material_flow_3 = #{materialFlow3},</if>
+            <if test="materialFlow4 != null">material_flow_4 = #{materialFlow4},</if>
+            <if test="materialFlow5 != null">material_flow_5 = #{materialFlow5},</if>
+            <if test="materialFlow6 != null">material_flow_6 = #{materialFlow6},</if>
+            <if test="materialFlow7 != null">material_flow_7 = #{materialFlow7},</if>
+            <if test="materialFlow8 != null">material_flow_8 = #{materialFlow8},</if>
+            <if test="materialFlow9 != null">material_flow_9 = #{materialFlow9},</if>
+            <if test="insertTime != null">insert_time = #{insertTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCementStabilizedById" parameterType="String">
+        delete from cement_stabilized_macadam_collection where id = #{id}
+    </delete>
+
+    <delete id="deleteCementStabilizedByIds" parameterType="String">
+        delete from cement_stabilized_macadam_collection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
