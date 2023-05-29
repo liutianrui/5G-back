@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.softening.mapper.ExpSofteningPointMapper">
+    
+    <resultMap type="ExpSofteningPoint" id="ExpSofteningPointResult">
+        <result property="id"    column="id"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="engineeringName"    column="engineering_name"    />
+        <result property="engineeringSite"    column="engineering_site"    />
+        <result property="taskNo"    column="task_no"    />
+        <result property="testType"    column="test_type"    />
+        <result property="testName"    column="test_name"    />
+        <result property="testNo"    column="test_no"    />
+        <result property="groupId"    column="group_id"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="tester"    column="tester"    />
+        <result property="sampleName"    column="sample_name"    />
+        <result property="testAllFr"    column="test_all_fr"    />
+        <result property="testFr"    column="test_fr"    />
+        <result property="sampleNo"    column="sample_no"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="uploadTime"    column="upload_time"    />
+        <result property="testTemp"    column="test_temp"    />
+        <result property="softenTime"    column="soften_time"    />
+        <result property="softenP"    column="soften_p"    />
+        <result property="average"    column="average"    />
+        <result property="curve"    column="curve"    />
+        <result property="curve1"    column="curve_1"    />
+        <result property="result"    column="result"    />
+        <result property="otherInformation"    column="other_information"    />
+        <result property="insertTime"    column="insert_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectExpSofteningPointVo">
+        select id, equipment_number, equipment_name, engineering_name, engineering_site, task_no, test_type, test_name, test_no, group_id, test_date, tester, sample_name, test_all_fr, test_fr, sample_no, start_time, end_time, upload_time, test_temp, soften_time, soften_p, average, curve, curve_1, result, other_information, insert_time, is_deleted from exp_softening_point
+    </sql>
+
+    <select id="selectExpSofteningPointList" parameterType="ExpSofteningPoint" resultMap="ExpSofteningPointResult">
+        <include refid="selectExpSofteningPointVo"/>
+        <where>  
+            <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number = #{equipmentNumber}</if>
+            <if test="groupId != null  and groupId != ''"> and group_id = #{groupId}</if>
+            <if test="uploadTime != null "> and upload_time = #{uploadTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectExpSofteningPointById" parameterType="String" resultMap="ExpSofteningPointResult">
+        <include refid="selectExpSofteningPointVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExpSofteningPoint" parameterType="ExpSofteningPoint">
+        insert into exp_softening_point
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="equipmentNumber != null">equipment_number,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="engineeringName != null">engineering_name,</if>
+            <if test="engineeringSite != null">engineering_site,</if>
+            <if test="taskNo != null">task_no,</if>
+            <if test="testType != null">test_type,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="testNo != null">test_no,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="tester != null">tester,</if>
+            <if test="sampleName != null">sample_name,</if>
+            <if test="testAllFr != null">test_all_fr,</if>
+            <if test="testFr != null">test_fr,</if>
+            <if test="sampleNo != null">sample_no,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="uploadTime != null">upload_time,</if>
+            <if test="testTemp != null">test_temp,</if>
+            <if test="softenTime != null">soften_time,</if>
+            <if test="softenP != null">soften_p,</if>
+            <if test="average != null">average,</if>
+            <if test="curve != null">curve,</if>
+            <if test="curve1 != null">curve_1,</if>
+            <if test="result != null">result,</if>
+            <if test="otherInformation != null">other_information,</if>
+            <if test="insertTime != null">insert_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="equipmentNumber != null">#{equipmentNumber},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="engineeringName != null">#{engineeringName},</if>
+            <if test="engineeringSite != null">#{engineeringSite},</if>
+            <if test="taskNo != null">#{taskNo},</if>
+            <if test="testType != null">#{testType},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="testNo != null">#{testNo},</if>
+            <if test="groupId != null">#{groupId},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="tester != null">#{tester},</if>
+            <if test="sampleName != null">#{sampleName},</if>
+            <if test="testAllFr != null">#{testAllFr},</if>
+            <if test="testFr != null">#{testFr},</if>
+            <if test="sampleNo != null">#{sampleNo},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="uploadTime != null">#{uploadTime},</if>
+            <if test="testTemp != null">#{testTemp},</if>
+            <if test="softenTime != null">#{softenTime},</if>
+            <if test="softenP != null">#{softenP},</if>
+            <if test="average != null">#{average},</if>
+            <if test="curve != null">#{curve},</if>
+            <if test="curve1 != null">#{curve1},</if>
+            <if test="result != null">#{result},</if>
+            <if test="otherInformation != null">#{otherInformation},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExpSofteningPoint" parameterType="ExpSofteningPoint">
+        update exp_softening_point
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="equipmentNumber != null">equipment_number = #{equipmentNumber},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="engineeringName != null">engineering_name = #{engineeringName},</if>
+            <if test="engineeringSite != null">engineering_site = #{engineeringSite},</if>
+            <if test="taskNo != null">task_no = #{taskNo},</if>
+            <if test="testType != null">test_type = #{testType},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="testNo != null">test_no = #{testNo},</if>
+            <if test="groupId != null">group_id = #{groupId},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="tester != null">tester = #{tester},</if>
+            <if test="sampleName != null">sample_name = #{sampleName},</if>
+            <if test="testAllFr != null">test_all_fr = #{testAllFr},</if>
+            <if test="testFr != null">test_fr = #{testFr},</if>
+            <if test="sampleNo != null">sample_no = #{sampleNo},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="testTemp != null">test_temp = #{testTemp},</if>
+            <if test="softenTime != null">soften_time = #{softenTime},</if>
+            <if test="softenP != null">soften_p = #{softenP},</if>
+            <if test="average != null">average = #{average},</if>
+            <if test="curve != null">curve = #{curve},</if>
+            <if test="curve1 != null">curve_1 = #{curve1},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="otherInformation != null">other_information = #{otherInformation},</if>
+            <if test="insertTime != null">insert_time = #{insertTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExpSofteningPointById" parameterType="String">
+        delete from exp_softening_point where id = #{id}
+    </delete>
+
+    <delete id="deleteExpSofteningPointByIds" parameterType="String">
+        delete from exp_softening_point where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mixingmachine.mapper.MixingmachineInfoMapper">
+    
+    <resultMap type="MixingmachineInfo" id="MixingmachineInfoResult">
+        <result property="mixingmachineId"    column="mixingmachine_id"    />
+        <result property="mixingStationCode"    column="mixing_station_code"    />
+        <result property="mixingMachineName"    column="mixing_machine_name"    />
+        <result property="abbreviation"    column="abbreviation"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="sectionProjectId"    column="section_project_id"    />
+        <result property="itemId"    column="item_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectMixingmachineInfoVo">
+        select mixingmachine_id, mixing_station_code, mixing_machine_name, abbreviation, equipment_number, manufacturer, section_project_id, item_id, create_time, is_deleted from mixingmachine_info
+    </sql>
+
+    <select id="selectMixingmachineInfoList" parameterType="MixingmachineInfo" resultMap="MixingmachineInfoResult">
+        <include refid="selectMixingmachineInfoVo"/>
+        <where>  
+            <if test="mixingStationCode != null  and mixingStationCode != ''"> and mixing_station_code = #{mixingStationCode}</if>
+            <if test="mixingMachineName != null  and mixingMachineName != ''"> and mixing_machine_name like concat('%', #{mixingMachineName}, '%')</if>
+            <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number like concat('%', #{equipmentNumber}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectMixingmachineInfoByMixingmachineId" parameterType="String" resultMap="MixingmachineInfoResult">
+        <include refid="selectMixingmachineInfoVo"/>
+        where mixingmachine_id = #{mixingmachineId}
+    </select>
+        
+    <insert id="insertMixingmachineInfo" parameterType="MixingmachineInfo">
+        insert into mixingmachine_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mixingmachineId != null">mixingmachine_id,</if>
+            <if test="mixingStationCode != null">mixing_station_code,</if>
+            <if test="mixingMachineName != null">mixing_machine_name,</if>
+            <if test="abbreviation != null">abbreviation,</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">equipment_number,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="sectionProjectId != null">section_project_id,</if>
+            <if test="itemId != null">item_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mixingmachineId != null">#{mixingmachineId},</if>
+            <if test="mixingStationCode != null">#{mixingStationCode},</if>
+            <if test="mixingMachineName != null">#{mixingMachineName},</if>
+            <if test="abbreviation != null">#{abbreviation},</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">#{equipmentNumber},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="sectionProjectId != null">#{sectionProjectId},</if>
+            <if test="itemId != null">#{itemId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMixingmachineInfo" parameterType="MixingmachineInfo">
+        update mixingmachine_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mixingStationCode != null">mixing_station_code = #{mixingStationCode},</if>
+            <if test="mixingMachineName != null">mixing_machine_name = #{mixingMachineName},</if>
+            <if test="abbreviation != null">abbreviation = #{abbreviation},</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">equipment_number = #{equipmentNumber},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="sectionProjectId != null">section_project_id = #{sectionProjectId},</if>
+            <if test="itemId != null">item_id = #{itemId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where mixingmachine_id = #{mixingmachineId}
+    </update>
+
+    <delete id="deleteMixingmachineInfoByMixingmachineId" parameterType="String">
+        delete from mixingmachine_info where mixingmachine_id = #{mixingmachineId}
+    </delete>
+
+    <delete id="deleteMixingmachineInfoByMixingmachineIds" parameterType="String">
+        delete from mixingmachine_info where mixingmachine_id in 
+        <foreach item="mixingmachineId" collection="array" open="(" separator="," close=")">
+            #{mixingmachineId}
+        </foreach>
+    </delete>
+</mapper>

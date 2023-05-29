@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.pollutant.mapper.PollutantDictMapper">
+    
+    <resultMap type="PollutantDict" id="PollutantDictResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="desCode"    column="des_code"    />
+        <result property="originalCode"    column="original_code"    />
+        <result property="consisitenceDataType"    column="consisitence_data_type"    />
+        <result property="consisitenceMeas"    column="consisitence_meas"    />
+        <result property="emissionsMeas"    column="emissions_meas"    />
+    </resultMap>
+
+    <sql id="selectPollutantDictVo">
+        select id, code, des_code, original_code, consisitence_data_type, consisitence_meas, emissions_meas from pollutant_dict
+    </sql>
+
+    <select id="selectPollutantDictList" parameterType="PollutantDict" resultMap="PollutantDictResult">
+        <include refid="selectPollutantDictVo"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="desCode != null  and desCode != ''"> and des_code like concat('%', #{desCode}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectPollutantDictById" parameterType="String" resultMap="PollutantDictResult">
+        <include refid="selectPollutantDictVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPollutantDict" parameterType="PollutantDict">
+        insert into pollutant_dict
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="code != null">code,</if>
+            <if test="desCode != null">des_code,</if>
+            <if test="originalCode != null">original_code,</if>
+            <if test="consisitenceDataType != null">consisitence_data_type,</if>
+            <if test="consisitenceMeas != null">consisitence_meas,</if>
+            <if test="emissionsMeas != null">emissions_meas,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="code != null">#{code},</if>
+            <if test="desCode != null">#{desCode},</if>
+            <if test="originalCode != null">#{originalCode},</if>
+            <if test="consisitenceDataType != null">#{consisitenceDataType},</if>
+            <if test="consisitenceMeas != null">#{consisitenceMeas},</if>
+            <if test="emissionsMeas != null">#{emissionsMeas},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePollutantDict" parameterType="PollutantDict">
+        update pollutant_dict
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="desCode != null">des_code = #{desCode},</if>
+            <if test="originalCode != null">original_code = #{originalCode},</if>
+            <if test="consisitenceDataType != null">consisitence_data_type = #{consisitenceDataType},</if>
+            <if test="consisitenceMeas != null">consisitence_meas = #{consisitenceMeas},</if>
+            <if test="emissionsMeas != null">emissions_meas = #{emissionsMeas},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePollutantDictById" parameterType="String">
+        delete from pollutant_dict where id = #{id}
+    </delete>
+
+    <delete id="deletePollutantDictByIds" parameterType="String">
+        delete from pollutant_dict where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
