@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.video.mapper.VideoInfoMapper">
+    
+    <resultMap type="VideoInfo" id="VideoInfoResult">
+        <result property="id"    column="id"    />
+        <result property="videoName"    column="video_name"    />
+        <result property="deviceSerial"    column="device_serial"    />
+        <result property="channelNo"    column="channel_no"    />
+        <result property="vilidCode"    column="vilid_code"    />
+        <result property="accessToken"    column="access_token"    />
+    </resultMap>
+
+    <sql id="selectVideoInfoVo">
+        select id, video_name, device_serial, channel_no, vilid_code, access_token from video_info
+    </sql>
+
+    <select id="selectVideoInfoList" parameterType="VideoInfo" resultMap="VideoInfoResult">
+        <include refid="selectVideoInfoVo"/>
+        <where>  
+            <if test="videoName != null  and videoName != ''"> and video_name like concat('%', #{videoName}, '%')</if>
+            <if test="deviceSerial != null  and deviceSerial != ''"> and device_serial like concat('%', #{deviceSerial}, '%')</if>
+            <if test="channelNo != null  and channelNo != ''"> and channel_no = #{channelNo}</if>
+        </where>
+    </select>
+    
+    <select id="selectVideoInfoById" parameterType="String" resultMap="VideoInfoResult">
+        <include refid="selectVideoInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertVideoInfo" parameterType="VideoInfo">
+        insert into video_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="videoName != null">video_name,</if>
+            <if test="deviceSerial != null">device_serial,</if>
+            <if test="channelNo != null">channel_no,</if>
+            <if test="vilidCode != null">vilid_code,</if>
+            <if test="accessToken != null">access_token,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="videoName != null">#{videoName},</if>
+            <if test="deviceSerial != null">#{deviceSerial},</if>
+            <if test="channelNo != null">#{channelNo},</if>
+            <if test="vilidCode != null">#{vilidCode},</if>
+            <if test="accessToken != null">#{accessToken},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVideoInfo" parameterType="VideoInfo">
+        update video_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="videoName != null">video_name = #{videoName},</if>
+            <if test="deviceSerial != null">device_serial = #{deviceSerial},</if>
+            <if test="channelNo != null">channel_no = #{channelNo},</if>
+            <if test="vilidCode != null">vilid_code = #{vilidCode},</if>
+            <if test="accessToken != null">access_token = #{accessToken},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVideoInfoById" parameterType="String">
+        delete from video_info where id = #{id}
+    </delete>
+
+    <delete id="deleteVideoInfoByIds" parameterType="String">
+        delete from video_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

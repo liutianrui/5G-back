@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.machine.mapper.StressMachineMapper">
+    
+    <resultMap type="StressMachine" id="StressMachineResult">
+        <result property="id"    column="id"    />
+        <result property="organizationId"    column="organization_id"    />
+        <result property="sectionId"    column="section_id"    />
+        <result property="sectionName"    column="section_name"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="constructionSpot"    column="construction_spot"    />
+        <result property="testType"    column="test_type"    />
+        <result property="testId"    column="test_id"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="concreteAge"    column="concrete_age"    />
+        <result property="cubeArea"    column="cube_area"    />
+        <result property="cubeCode"    column="cube_code"    />
+        <result property="cubeCount"    column="cube_count"    />
+        <result property="loadValue"    column="load_value"    />
+        <result property="compressiveStrength"    column="compressive_strength"    />
+        <result property="representativeStrength"    column="representative_strength"    />
+        <result property="designStrength"    column="design_strength"    />
+        <result property="testEvaluation"    column="test_evaluation"    />
+        <result property="graphId"    column="graph_id"    />
+        <result property="processStress"    column="process_stress"    />
+        <result property="insertTime"    column="insert_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectStressMachineVo">
+        select id, organization_id, section_id, section_name, equipment_number, equipment_name, project_name, construction_spot, test_type, test_id, test_date, concrete_age, cube_area, cube_code, cube_count, load_value, compressive_strength, representative_strength, design_strength, test_evaluation, graph_id, process_stress, insert_time, is_deleted from stress_machine
+    </sql>
+
+    <select id="selectStressMachineList" parameterType="StressMachine" resultMap="StressMachineResult">
+        <include refid="selectStressMachineVo"/>
+        <where>  
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectStressMachineById" parameterType="String" resultMap="StressMachineResult">
+        <include refid="selectStressMachineVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStressMachine" parameterType="StressMachine">
+        insert into stress_machine
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="organizationId != null">organization_id,</if>
+            <if test="sectionId != null">section_id,</if>
+            <if test="sectionName != null">section_name,</if>
+            <if test="equipmentNumber != null">equipment_number,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="constructionSpot != null">construction_spot,</if>
+            <if test="testType != null">test_type,</if>
+            <if test="testId != null">test_id,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="concreteAge != null">concrete_age,</if>
+            <if test="cubeArea != null">cube_area,</if>
+            <if test="cubeCode != null">cube_code,</if>
+            <if test="cubeCount != null">cube_count,</if>
+            <if test="loadValue != null">load_value,</if>
+            <if test="compressiveStrength != null">compressive_strength,</if>
+            <if test="representativeStrength != null">representative_strength,</if>
+            <if test="designStrength != null">design_strength,</if>
+            <if test="testEvaluation != null">test_evaluation,</if>
+            <if test="graphId != null">graph_id,</if>
+            <if test="processStress != null">process_stress,</if>
+            <if test="insertTime != null">insert_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="organizationId != null">#{organizationId},</if>
+            <if test="sectionId != null">#{sectionId},</if>
+            <if test="sectionName != null">#{sectionName},</if>
+            <if test="equipmentNumber != null">#{equipmentNumber},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="constructionSpot != null">#{constructionSpot},</if>
+            <if test="testType != null">#{testType},</if>
+            <if test="testId != null">#{testId},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="concreteAge != null">#{concreteAge},</if>
+            <if test="cubeArea != null">#{cubeArea},</if>
+            <if test="cubeCode != null">#{cubeCode},</if>
+            <if test="cubeCount != null">#{cubeCount},</if>
+            <if test="loadValue != null">#{loadValue},</if>
+            <if test="compressiveStrength != null">#{compressiveStrength},</if>
+            <if test="representativeStrength != null">#{representativeStrength},</if>
+            <if test="designStrength != null">#{designStrength},</if>
+            <if test="testEvaluation != null">#{testEvaluation},</if>
+            <if test="graphId != null">#{graphId},</if>
+            <if test="processStress != null">#{processStress},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStressMachine" parameterType="StressMachine">
+        update stress_machine
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="organizationId != null">organization_id = #{organizationId},</if>
+            <if test="sectionId != null">section_id = #{sectionId},</if>
+            <if test="sectionName != null">section_name = #{sectionName},</if>
+            <if test="equipmentNumber != null">equipment_number = #{equipmentNumber},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="constructionSpot != null">construction_spot = #{constructionSpot},</if>
+            <if test="testType != null">test_type = #{testType},</if>
+            <if test="testId != null">test_id = #{testId},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="concreteAge != null">concrete_age = #{concreteAge},</if>
+            <if test="cubeArea != null">cube_area = #{cubeArea},</if>
+            <if test="cubeCode != null">cube_code = #{cubeCode},</if>
+            <if test="cubeCount != null">cube_count = #{cubeCount},</if>
+            <if test="loadValue != null">load_value = #{loadValue},</if>
+            <if test="compressiveStrength != null">compressive_strength = #{compressiveStrength},</if>
+            <if test="representativeStrength != null">representative_strength = #{representativeStrength},</if>
+            <if test="designStrength != null">design_strength = #{designStrength},</if>
+            <if test="testEvaluation != null">test_evaluation = #{testEvaluation},</if>
+            <if test="graphId != null">graph_id = #{graphId},</if>
+            <if test="processStress != null">process_stress = #{processStress},</if>
+            <if test="insertTime != null">insert_time = #{insertTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStressMachineById" parameterType="String">
+        delete from stress_machine where id = #{id}
+    </delete>
+
+    <delete id="deleteStressMachineByIds" parameterType="String">
+        delete from stress_machine where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

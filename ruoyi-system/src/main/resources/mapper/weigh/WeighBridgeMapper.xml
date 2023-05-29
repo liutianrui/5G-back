@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.weigh.mapper.WeighBridgeMapper">
+
+    <resultMap type="WeighBridge" id="WeighBridgeResult">
+        <result property="id"    column="id"    />
+        <result property="taskNo"    column="task_no"    />
+        <result property="organizationId"    column="organization_id"    />
+        <result property="sectionName"    column="section_name"    />
+        <result property="sectionId"    column="section_id"    />
+        <result property="mixingStationName"    column="mixing_station_name"    />
+        <result property="mixingStationCode"    column="mixing_station_code"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="materialBrand"    column="material_brand"    />
+        <result property="materialVendor"    column="material_vendor"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialSpec"    column="material_spec"    />
+        <result property="materialBatch"    column="material_batch"    />
+        <result property="productionDate"    column="production_date"    />
+        <result property="sendingPlace"    column="sending_place"    />
+        <result property="receivingPlace"    column="receiving_place"    />
+        <result property="grossWeight"    column="gross_weight"    />
+        <result property="tareWeight"    column="tare_weight"    />
+        <result property="netWeight"    column="net_weight"    />
+        <result property="deduction"    column="deduction"    />
+        <result property="countingWeight"    column="counting_weight"    />
+        <result property="actualWeight"    column="actual_weight"    />
+        <result property="carNumber"    column="car_number"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="exitTime"    column="exit_time"    />
+        <result property="insertTime"    column="insert_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectWeighBridgeVo">
+        select id, task_no, organization_id, section_name, section_id, mixing_station_name, mixing_station_code, equipment_number, equipment_name, material_brand, material_vendor, material_type, material_spec, material_batch, production_date, sending_place, receiving_place, gross_weight, tare_weight, net_weight, deduction, counting_weight, actual_weight, car_number, entry_time, exit_time, insert_time, is_deleted from weigh_bridge
+    </sql>
+
+    <select id="selectWeighBridgeList" parameterType="WeighBridge" resultMap="WeighBridgeResult">
+        <include refid="selectWeighBridgeVo"/>
+        <where>
+            <if test="equipmentNumber != null  and equipmentNumber != ''"> and equipment_number = #{equipmentNumber}</if>
+            <if test="carNumber != null  and carNumber != ''"> and car_number = #{carNumber}</if>
+        </where>
+    </select>
+
+    <select id="selectWeighBridgeById" parameterType="String" resultMap="WeighBridgeResult">
+        <include refid="selectWeighBridgeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWeighBridge" parameterType="WeighBridge">
+        insert into weigh_bridge
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="taskNo != null and taskNo != ''">task_no,</if>
+            <if test="organizationId != null and organizationId != ''">organization_id,</if>
+            <if test="sectionName != null">section_name,</if>
+            <if test="sectionId != null and sectionId != ''">section_id,</if>
+            <if test="mixingStationName != null">mixing_station_name,</if>
+            <if test="mixingStationCode != null and mixingStationCode != ''">mixing_station_code,</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">equipment_number,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="materialBrand != null and materialBrand != ''">material_brand,</if>
+            <if test="materialVendor != null">material_vendor,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="materialSpec != null">material_spec,</if>
+            <if test="materialBatch != null">material_batch,</if>
+            <if test="productionDate != null">production_date,</if>
+            <if test="sendingPlace != null">sending_place,</if>
+            <if test="receivingPlace != null">receiving_place,</if>
+            <if test="grossWeight != null">gross_weight,</if>
+            <if test="tareWeight != null">tare_weight,</if>
+            <if test="netWeight != null">net_weight,</if>
+            <if test="deduction != null">deduction,</if>
+            <if test="countingWeight != null">counting_weight,</if>
+            <if test="actualWeight != null">actual_weight,</if>
+            <if test="carNumber != null">car_number,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="exitTime != null">exit_time,</if>
+            <if test="insertTime != null">insert_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="taskNo != null and taskNo != ''">#{taskNo},</if>
+            <if test="organizationId != null and organizationId != ''">#{organizationId},</if>
+            <if test="sectionName != null">#{sectionName},</if>
+            <if test="sectionId != null and sectionId != ''">#{sectionId},</if>
+            <if test="mixingStationName != null">#{mixingStationName},</if>
+            <if test="mixingStationCode != null and mixingStationCode != ''">#{mixingStationCode},</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">#{equipmentNumber},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="materialBrand != null and materialBrand != ''">#{materialBrand},</if>
+            <if test="materialVendor != null">#{materialVendor},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="materialSpec != null">#{materialSpec},</if>
+            <if test="materialBatch != null">#{materialBatch},</if>
+            <if test="productionDate != null">#{productionDate},</if>
+            <if test="sendingPlace != null">#{sendingPlace},</if>
+            <if test="receivingPlace != null">#{receivingPlace},</if>
+            <if test="grossWeight != null">#{grossWeight},</if>
+            <if test="tareWeight != null">#{tareWeight},</if>
+            <if test="netWeight != null">#{netWeight},</if>
+            <if test="deduction != null">#{deduction},</if>
+            <if test="countingWeight != null">#{countingWeight},</if>
+            <if test="actualWeight != null">#{actualWeight},</if>
+            <if test="carNumber != null">#{carNumber},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="exitTime != null">#{exitTime},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWeighBridge" parameterType="WeighBridge">
+        update weigh_bridge
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskNo != null and taskNo != ''">task_no = #{taskNo},</if>
+            <if test="organizationId != null and organizationId != ''">organization_id = #{organizationId},</if>
+            <if test="sectionName != null">section_name = #{sectionName},</if>
+            <if test="sectionId != null and sectionId != ''">section_id = #{sectionId},</if>
+            <if test="mixingStationName != null">mixing_station_name = #{mixingStationName},</if>
+            <if test="mixingStationCode != null and mixingStationCode != ''">mixing_station_code = #{mixingStationCode},</if>
+            <if test="equipmentNumber != null and equipmentNumber != ''">equipment_number = #{equipmentNumber},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="materialBrand != null and materialBrand != ''">material_brand = #{materialBrand},</if>
+            <if test="materialVendor != null">material_vendor = #{materialVendor},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialSpec != null">material_spec = #{materialSpec},</if>
+            <if test="materialBatch != null">material_batch = #{materialBatch},</if>
+            <if test="productionDate != null">production_date = #{productionDate},</if>
+            <if test="sendingPlace != null">sending_place = #{sendingPlace},</if>
+            <if test="receivingPlace != null">receiving_place = #{receivingPlace},</if>
+            <if test="grossWeight != null">gross_weight = #{grossWeight},</if>
+            <if test="tareWeight != null">tare_weight = #{tareWeight},</if>
+            <if test="netWeight != null">net_weight = #{netWeight},</if>
+            <if test="deduction != null">deduction = #{deduction},</if>
+            <if test="countingWeight != null">counting_weight = #{countingWeight},</if>
+            <if test="actualWeight != null">actual_weight = #{actualWeight},</if>
+            <if test="carNumber != null">car_number = #{carNumber},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="exitTime != null">exit_time = #{exitTime},</if>
+            <if test="insertTime != null">insert_time = #{insertTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWeighBridgeById" parameterType="String">
+        delete from weigh_bridge where id = #{id}
+    </delete>
+
+    <delete id="deleteWeighBridgeByIds" parameterType="String">
+        delete from weigh_bridge where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--查询柱状图数据，按天分组-->
+    <select id="queryByBar" resultType="map">
+        select
+        SUM(t.net_weight) netWeight,
+        t.exit_time exitTime from (
+        select  net_weight, DATE_FORMAT(exit_time,'%Y-%m-%d') exit_time
+        from weigh_bridge
+        WHERE
+        1=1
+        <if test="minTime != null and minTime != ''">
+            and DATE_FORMAT(exit_time,'%Y-%m-%d') &gt;= #{minTime}
+        </if>
+        <if test="maxTime != null and maxTime != ''">
+            and DATE_FORMAT(exit_time,'%Y-%m-%d') &lt;= #{maxTime}
+        </if>
+        <if test="carNumber != null and carNumber !=''">
+            and car_number like concat('%',#{carNumber},'%')
+        </if>
+        ) t GROUP BY t.exit_time
+        order by t.exit_time desc
+    </select>
+
+    <!--查询饼图数据，按物料种类分组-->
+    <select id="queryByPie" resultType="map">
+        select
+        SUM(t.net_weight) netWeight,
+        t.materialType
+        from (
+        select material_type materialType, net_weight, exit_time
+        from weigh_bridge
+        WHERE
+        1=1
+        <if test="minTime != null and minTime != ''">
+            and DATE_FORMAT(exit_time,'%Y-%m-%d') &gt;= #{minTime}
+        </if>
+        <if test="maxTime != null and maxTime != ''">
+            and DATE_FORMAT(exit_time,'%Y-%m-%d') &lt;= #{maxTime}
+        </if>
+        <if test="carNumber != null and carNumber !=''">
+            and car_number like concat('%',#{carNumber},'%')
+        </if>
+        ) t GROUP BY t.materialType
+        order by netWeight desc
+    </select>
+
+    <!--查询默认的最新时间和最近七天的时间-->
+    <select id="queryTime" resultType="map">
+        select max(exit_time) maxTime,DATE_SUB(max(exit_time), INTERVAL 7 DAY) minTime from weigh_bridge
+    </select>
+
+</mapper>
